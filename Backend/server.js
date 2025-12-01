@@ -5,10 +5,13 @@ const dotenv = require('dotenv');
 const connectDB = require('./database/connectdb');
 const categoryRoutes = require('./routes/category.route');
 const upload = require('./middleware/uploadImage');
+const stadiumRoutes = require('./routes/stadium.route');
 dotenv.config();
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1/category', upload.single('image'), categoryRoutes);
-
+app.use('/api/v1/category', categoryRoutes);
+app.use('/api/v1/stadium', stadiumRoutes);
 
 connectDB();
 app.listen(Port, () => {

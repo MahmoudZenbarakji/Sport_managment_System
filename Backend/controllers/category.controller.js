@@ -1,18 +1,17 @@
 const Category = require('../models/category.model');
-export const createCategory = async (req, res) => {
-    try {
-        const { name, description } = req.body;
 
-        if (!name || !description || !req.file) {
+ const createCategory = async (req, res) => {
+    try {
+        const { name, description, image } = req.body;
+
+        if (!name || !description || !image) {
             return res.status(400).json({ message: "All fields are required" });
         }
-
-        const imageUrl = `/uploads/${req.file.filename}`;
 
         const category = await Category.create({
             name,
             description,
-            image: imageUrl
+            image
         });
 
         res.status(201).json(category);
@@ -23,12 +22,12 @@ export const createCategory = async (req, res) => {
 };
 
 
-export const getCategories = async (req, res) => {
+ const getCategories = async (req, res) => {
     const categories = await Category.find();
     res.status(200).json(categories);
 };
 
-export const updateCategory = async (req, res) => {
+ const updateCategory = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, description } = req.body;
@@ -65,7 +64,7 @@ export const updateCategory = async (req, res) => {
     }
 };
 
-export const deleteCategory = async (req, res) => {
+const deleteCategory = async (req, res) => {
     const { id } = req.params;
     await Category.findByIdAndDelete(id);
     res.status(200).json({ message: 'Category deleted successfully' });

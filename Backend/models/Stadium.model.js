@@ -12,7 +12,7 @@ const stadiumSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,

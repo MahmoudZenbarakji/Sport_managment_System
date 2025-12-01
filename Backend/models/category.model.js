@@ -21,9 +21,9 @@ const categorySchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    Image: {
+    image: {
         type: String,
-        default: 'https://via.placeholder.com/150'
+        required: true
     }
 });
 
