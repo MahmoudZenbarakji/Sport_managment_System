@@ -2,16 +2,16 @@ const Stadium = require('../models/Stadium.model');
 
 const createStadium = async (req, res) => {
     try {
-        const { name, description, category, Image } = req.body;
+        const { name, description, category, Price, Image } = req.body;
 
-        if (!name || !description || !category) {
+        if (!name || !description || !category || !Price  ) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
         const stadium = await Stadium.create({
             name,
             description,
-            
+            Price,
             category,
             Image: Image || 'https://via.placeholder.com/150'
         });

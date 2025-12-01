@@ -19,6 +19,10 @@ const stadiumSchema = new mongoose.Schema({
         ref: 'Category',
         required: true
     },
+    Price:{
+        type: Number,
+        required:true,
+    },
     Image: {
         type: String,
         default: 'https://via.placeholder.com/150'

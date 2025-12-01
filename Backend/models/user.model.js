@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'user', 'coach', 'outSource Stadium Owner'],
+        enum: ['admin', 'user', 'coach'],
         default: 'user'
     },
     profilePicture: {

@@ -9,6 +9,11 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -21,11 +26,14 @@ const blogSchema = new mongoose.Schema({
         type: String,
         default: 'https://via.placeholder.com/150'
     },
-    comments: {
+    comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
-        required: true
-    }
+        ref: "Comment"
+    }],
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 const Blog = mongoose.model('Blog', blogSchema);
