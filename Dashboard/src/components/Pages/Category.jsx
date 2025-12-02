@@ -7,8 +7,7 @@ const Category = () => {
     description: '',
     image: ''
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  
   const [editingId, setEditingId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,15 +38,7 @@ const Category = () => {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onload = (evt) => setImagePreview(evt.target.result);
-      reader.readAsDataURL(file);
-    }
-  };
+  // Image is provided as a URL in `form.image`.
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,37 +46,30 @@ const Category = () => {
     setSuccess('');
     try {
       const token = localStorage.getItem('token');
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('description', form.description);
-      if (imageFile) {
-        formData.append('image', imageFile);
-      } else if (form.image && !editingId) {
-        // only set image if it's a string (URL from editing)
-        formData.append('image', form.image);
-      }
+      const payload = {
+        name: form.name,
+        description: form.description,
+        image: form.image || undefined
+      };
 
       if (editingId) {
-        // Update category
         await axios.put(
           `${apiBase}/api/v1/category/${editingId}`,
-          formData,
+          payload,
           { headers: token ? { Authorization: `Bearer ${token}` } : {} }
         );
         setSuccess('Category updated successfully');
         setEditingId(null);
       } else {
-        // Create new category
         await axios.post(
           `${apiBase}/api/v1/category`,
-          formData,
+          payload,
           { headers: token ? { Authorization: `Bearer ${token}` } : {} }
         );
         setSuccess('Category created successfully');
       }
       setForm({ name: '', description: '', image: '' });
-      setImageFile(null);
-      setImagePreview('');
+      // cleared form
       fetchCategories();
     } catch (err) {
       setError(err.response?.data?.message || err.message);
@@ -116,8 +100,7 @@ const Category = () => {
   const handleCancel = () => {
     setEditingId(null);
     setForm({ name: '', description: '', image: '' });
-    setImageFile(null);
-    setImagePreview('');
+    // cleared form
   };
 
   return (
@@ -156,20 +139,19 @@ const Category = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium">Image</label>
-            <div className="flex flex-col gap-2">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="w-full p-2 border rounded"
-              />
-              {(imagePreview || (form.image && !imageFile)) && (
-                <div className="h-32 bg-gray-200 rounded flex items-center justify-center">
-                  <img src={imagePreview || form.image} alt="Preview" className="h-full object-cover" />
-                </div>
-              )}
-            </div>
+            <label className="block text-sm font-medium">Image URL</label>
+            <input
+              name="image"
+              value={form.image}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              placeholder="https://... or /uploads/yourfile.png"
+            />
+            {form.image && (
+              <div className="h-32 bg-gray-200 rounded flex items-center justify-center mt-2 overflow-hidden">
+                <img src={form.image.startsWith('http') ? form.image : `${apiBase}${form.image}`} alt="Preview" className="h-full object-cover" onError={(e)=>e.target.style.display='none'} />
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -198,7 +180,7 @@ const Category = () => {
               <div key={cat._id} className="border rounded-lg shadow-md overflow-hidden">
                 <div className="h-48 bg-gray-200 overflow-hidden">
                   {cat.image ? (
-                    <img src={`${apiBase}${cat.image}`} alt={cat.name} className="w-full h-full object-cover" onError={(e) => e.target.style.display = 'none'} />
+                    <img src={`${cat.image}`} alt={cat.name} className="w-full h-full object-cover" onError={(e) => e.target.style.display = 'none'} />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
                   )}

@@ -2,14 +2,17 @@ const Category = require('../models/category.model');
 
  const createCategory = async (req, res) => {
     try {
-        const { name, description } = req.body;
+        const { name, description, image } = req.body;
 
         if (!name || !description) {
             return res.status(400).json({ message: "name and description are required" });
         }
 
+        // Prefer image url from body -> uploaded file -> placeholder
         let imageUrl = 'https://via.placeholder.com/150';
-        if (req.file) {
+        if (image && typeof image === 'string' && image.trim() !== '') {
+            imageUrl = image;
+        } else if (req.file) {
             imageUrl = `/uploads/${req.file.filename}`;
         }
 
@@ -43,9 +46,12 @@ const Category = require('../models/category.model');
             return res.status(404).json({ message: "Category not found" });
         }
 
-        // If user uploaded a new image, use it
+        // Prefer image URL from body -> uploaded file -> existing
+        const { image } = req.body;
         let imageUrl = existingCategory.image;
-        if (req.file) {
+        if (image && typeof image === 'string' && image.trim() !== '') {
+            imageUrl = image;
+        } else if (req.file) {
             imageUrl = `/uploads/${req.file.filename}`;
         }
 
