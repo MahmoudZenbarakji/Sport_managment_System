@@ -11,6 +11,7 @@ import Stadium from './components/Pages/Stadium';
 import User from './components/Pages/User';
 import Requests from './components/Pages/Requests';
 import Notifications from './components/Pages/Notifications';
+import Coaches from './components/Pages/Coaches';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="category" element={<Category />} />
           <Route path="stadium" element={<Stadium />} />
           <Route path="user" element={<User />} />
+          <Route path="user/coaches" element={<Coaches />} />
           <Route path="requests" element={<Requests />} />
           <Route path="notifications" element={<Notifications />} />
           

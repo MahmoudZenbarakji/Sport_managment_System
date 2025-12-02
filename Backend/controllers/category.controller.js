@@ -2,16 +2,21 @@ const Category = require('../models/category.model');
 
  const createCategory = async (req, res) => {
     try {
-        const { name, description, image } = req.body;
+        const { name, description } = req.body;
 
-        if (!name || !description || !image) {
-            return res.status(400).json({ message: "All fields are required" });
+        if (!name || !description) {
+            return res.status(400).json({ message: "name and description are required" });
+        }
+
+        let imageUrl = 'https://via.placeholder.com/150';
+        if (req.file) {
+            imageUrl = `/uploads/${req.file.filename}`;
         }
 
         const category = await Category.create({
             name,
             description,
-            image
+            image: imageUrl
         });
 
         res.status(201).json(category);

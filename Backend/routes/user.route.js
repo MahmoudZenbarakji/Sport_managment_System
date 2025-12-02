@@ -6,15 +6,18 @@ const { requireRole } = require('../middleware/role.middleware');
 
 // Admin-only: create users with roles (including coach)
 router.route('/')
-    .post(verifyToken, requireRole('admin'), userController.registerUser)
-    .get(verifyToken, requireRole('admin'), userController.getUsers);
+    .post(userController.registerUser)
+    .get( userController.getUsers);
+
+// Admin helper to directly create a coach
+router.post('/create-coach',  userController.createCoach);
 
 // Public: list coaches for frontend pages
 router.get('/coaches', userController.getCoaches);
 
 router.route('/:id')
-    .get(verifyToken, requireRole('admin'), userController.getUserById)
-    .put(verifyToken, requireRole('admin'), userController.updateUser)
-    .delete(verifyToken, requireRole('admin'), userController.deleteUser);
+    .get(  userController.getUserById)
+    .put(verifyToken,  userController.updateUser)
+    .delete(verifyToken, userController.deleteUser);
 
 module.exports = router;

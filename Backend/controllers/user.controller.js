@@ -39,6 +39,44 @@ const registerUser = async (req, res) => {
     }
 };
 
+// Admin helper: create a coach user
+const createCoach = async (req, res) => {
+    try {
+        const { name, email, password, profilePicture, bio, location, phoneNumber, address, city, state } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'name, email and password are required' });
+        }
+
+        const existing = await User.findOne({ email });
+        if (existing) return res.status(409).json({ message: 'Email already in use' });
+
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(password, salt);
+
+        const user = await User.create({
+            name,
+            email,
+            password: hashed,
+            role: 'coach',
+            profilePicture,
+            bio,
+            location,
+            phoneNumber,
+            address,
+            city,
+            state
+        });
+
+        const userObj = user.toObject();
+        delete userObj.password;
+
+        res.status(201).json(userObj);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+};
+
 const getUsers = async (req, res) => {
     try {
         const users = await User.find().select('-password');
@@ -123,6 +161,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     registerUser,
+    createCoach,
     getUsers,
     getCoaches,
     getUserById,
