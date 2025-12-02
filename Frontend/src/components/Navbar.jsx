@@ -1,11 +1,11 @@
 // src/components/Navbar.jsx
 
 import React from "react";
-import { FaStar } from "react-icons/fa"; 
+import { FaStar } from "react-icons/fa";
 
 const Navbar = () => {
   const navLinks = [
-    { name: "Home", href: "HomeBage" },
+    { name: "Home", href: "/" },
     { name: "Categories", href: "#categories" },
     { name: "Facility", href: "#facilities" },
     { name: "Gym", href: "gyms" },
@@ -19,9 +19,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <FaStar className="text-[#E9622b] text-2xl mr-2" />
+            <img
+              className="w-[50px] h-[50px]"
+              src="WhatsApp_Image_2025-12-02_at_12.46.28_PM-removebg-preview.png"
+              alt=""
+            />
             <span className="text-white text-2xl font-bold tracking-wider">
-              SPOTFINDA
+              SportSphere
             </span>
           </div>
           <div className="hidden md:flex space-x-8">

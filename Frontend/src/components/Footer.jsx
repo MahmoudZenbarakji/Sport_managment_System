@@ -15,9 +15,15 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 border-b border-gray-800 pb-8">
           <div className="col-span-2 md:col-span-2">
-            <div className="flex items-center mb-4">
-              <FaStar className="text-[#E9622b] text-xl mr-2" />
-              <span className="text-xl font-bold">SPOTFINDA</span>
+            <div className="flex items-center">
+              <img
+                className="w-[50px] h-[50px]"
+                src="WhatsApp_Image_2025-12-02_at_12.46.28_PM-removebg-preview.png"
+                alt=""
+              />
+              <span className="text-white text-2xl font-bold tracking-wider">
+                SportSphere
+              </span>
             </div>
             <p className="text-sm text-[#D3D3D3] mb-4">
               Your trusted platform for finding and booking sports fields

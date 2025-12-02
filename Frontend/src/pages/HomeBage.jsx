@@ -1,15 +1,11 @@
-
-
-import React from "react";
-import Navbar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
+import AboutUs from "../components/AboutUs";
 import Categories from "../components/Categories";
 import Facilities from "../components/Facilities";
-import GymSection from "../components/GymSection";
-import TeamSection from "../components/TeamSection";
-import AboutUs from "../components/AboutUs";
 import Footer from "../components/Footer";
-import FacilityDetailsContent from "../components/FacilityDetailsContent";
+import GymSection from "../components/GymSection";
+import HeroSection from "../components/HeroSection";
+import Navbar from "../components/Navbar";
+import TeamSection from "../components/TeamSection";
 
 const HomeBage = () => {
   return (
@@ -21,7 +17,6 @@ const HomeBage = () => {
         <Facilities />
         <GymSection />
         <TeamSection />
-        
         <AboutUs />
       </main>
       <Footer />

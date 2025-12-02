@@ -7,6 +7,9 @@ import './App.css';
 import FacilityDetailsPage from './pages/FacilityDetailsPage'; // استدعاء الصفحة الجديدة
 import GymsPage from './pages/GymsPage';
 
+
+
+
 // function App() {
 //   return (
 //     <Router>
@@ -26,8 +29,41 @@ import GymsPage from './pages/GymsPage';
 
 // src/App.jsx (الجزء الخاص بـ Routes)
 
+
+
+
+
+
+
+
+
 // ... (استيرادات)
 // import GymsPage from './pages/GymsPage'; 
+
+// function App() {
+//   return (
+//     <Router>
+//       <div className="App">
+//         <Routes>
+//           <Route path="/" element={<HomeBage />} />
+//           <Route path="/category/:type" element={<CategoryPage />} />
+//           <Route path="/facility/:id" element={<FacilityDetailsPage />} />
+          
+//           {/* المسار الجديد لصفحة كل الجيمات */}
+//           <Route path="/gyms" element={<GymsPage />} />
+//         </Routes>
+//       </div>
+//     </Router>
+//   );
+// }
+
+
+
+
+// src/App.jsx (الجزء الخاص بـ Routes)
+
+// ... (استيرادات)
+import EstablishmentDetailsPage from './pages/EstablishmentDetailsPage'; // استدعاء الصفحة الجديدة
 
 function App() {
   return (
@@ -37,13 +73,17 @@ function App() {
           <Route path="/" element={<HomeBage />} />
           <Route path="/category/:type" element={<CategoryPage />} />
           <Route path="/facility/:id" element={<FacilityDetailsPage />} />
-          
-          {/* المسار الجديد لصفحة كل الجيمات */}
           <Route path="/gyms" element={<GymsPage />} />
+          
+          {/* ⬅️ المسار الجديد لتفاصيل المنشأة - يجب أن تستخدم IDs المنشآت هنا */}
+          <Route path="/establishment/:establishmentId" element={<EstablishmentDetailsPage />} />
+          
+          {/* مسار وهمي لصفحة الحجز - يجب عليك بناء هذه الصفحة لاحقاً */}
+          <Route path="/booking/:courtId" element={<div>Booking Page for Court ID: :courtId</div>} />
         </Routes>
       </div>
     </Router>
   );
 }
-
+// ...
 export default App;

@@ -7,7 +7,7 @@ const AboutUs = () => {
     <section id="about" className="py-20 bg-black text-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl font-extrabold mb-8 text-[#E9622b]">
-          What is Spotfinda?
+          What is SportSphere?
         </h2>
         <p className="text-xl leading-relaxed text-[#D3D3D3] px-4 md:px-0">
           We created this platform to make sports booking simple and fast. Here,

@@ -1,10 +1,10 @@
-// src/components/FacilityDetailsPage.jsx
+import React from "react";
 import Navbar from "../components/Navbar";
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 import { FacilityDetailsContent } from "../components/FacilityDetailsContent";
 
-const FacilityDetailsPage = () => {
-  const facilityId = "complex1";
+const EstablishmentDetailsPage = () => {
+  const facilityId = "complex1"; // يمكن تغييره لأي منشأة أخرى
 
   return (
     <div className="bg-black min-h-screen flex flex-col font-[Inter]">
@@ -17,4 +17,4 @@ const FacilityDetailsPage = () => {
   );
 };
 
-export default FacilityDetailsPage;
+export default EstablishmentDetailsPage;

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import img9 from "../img/WhatsApp Image 2025-12-01 at 11.38.05 AM.jpeg";
 import img10 from "../img/WhatsApp Image 2025-12-01 at 12.25.23 PM.jpeg";
+import img13 from "../img/Gemini_Generated_Image_y2guv1y2guv1y2gu (1).png";
+import img14 from "../img/WhatsApp Image 2025-12-02 at 10.31.42 AM.jpeg";
 const teamMembers = [
   {
     name: "Farah Al-Daroish",
@@ -17,14 +19,14 @@ const teamMembers = [
     title: "CEO & Founder",
     bio: "Leading the vision, direction, and growth of the platform.Focused on innovation, quality, and delivering the best user experience.",
     image:
-      "https://via.placeholder.com/400x500/000000/ffffff?text=Team+Member+2",
+      img13,
   },
   {
     name: "Dimaa Daabous",
     title: "Back-end Developer",
     bio: "Building strong, secure, and scalable server systems Turning ideas into powerful functionality behind the scenes..",
     image:
-      "https://via.placeholder.com/400x500/D3D3D3/000000?text=Team+Member+3",
+      img14,
   },
   {
     name: "Nour Al-shemali",
