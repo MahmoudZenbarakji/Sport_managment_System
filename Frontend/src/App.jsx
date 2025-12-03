@@ -6,6 +6,9 @@ import CategoryPage from './pages/CategoryPage';
 import './App.css';
 import FacilityDetailsPage from './pages/FacilityDetailsPage'; // استدعاء الصفحة الجديدة
 import GymsPage from './pages/GymsPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 
 
@@ -71,6 +74,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomeBage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/category/:type" element={<CategoryPage />} />
           <Route path="/facility/:id" element={<FacilityDetailsPage />} />
           <Route path="/gyms" element={<GymsPage />} />

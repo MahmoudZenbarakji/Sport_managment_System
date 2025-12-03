@@ -1,9 +1,13 @@
 // src/components/Navbar.jsx
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import { isAuthenticated } from "../utils/api";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const authenticated = isAuthenticated();
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Categories", href: "#categories" },
@@ -40,12 +44,29 @@ const Navbar = () => {
             ))}
           </div>
           <div className="flex items-center space-x-4">
-            <button className="px-4 py-2 text-white bg-[#E9622b] hover:bg-opacity-90 rounded-lg transition duration-300">
-              Log in
-            </button>
-            <button className="px-4 py-2 text-[#E9622b] border-2 border-[#E9622b] hover:bg-[#E9622b] hover:text-white rounded-lg transition duration-300">
-              Get Started
-            </button>
+            {authenticated ? (
+              <button 
+                onClick={() => navigate("/profile")}
+                className="px-4 py-2 text-white bg-[#E9622b] hover:bg-opacity-90 rounded-lg transition duration-300"
+              >
+                Profile
+              </button>
+            ) : (
+              <>
+                <button 
+                  onClick={() => navigate("/login")}
+                  className="px-4 py-2 text-white bg-[#E9622b] hover:bg-opacity-90 rounded-lg transition duration-300"
+                >
+                  Log in
+                </button>
+                <button 
+                  onClick={() => navigate("/register")}
+                  className="px-4 py-2 text-[#E9622b] border-2 border-[#E9622b] hover:bg-[#E9622b] hover:text-white rounded-lg transition duration-300"
+                >
+                  Get Started
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
