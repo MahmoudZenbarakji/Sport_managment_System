@@ -97,8 +97,20 @@ const me = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    try {
+        // Since JWT is stateless, logout is mainly client-side
+        // But we can log the logout event or perform any server-side cleanup here
+        // For now, just return success
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+};
+
 module.exports = {
     register,
     login,
-    me
+    me,
+    logout
 };

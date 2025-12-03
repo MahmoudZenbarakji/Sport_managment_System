@@ -10,6 +10,7 @@ const stadiumRoutes = require('./routes/stadium.route');
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
 const sessionRoutes = require('./routes/session.route');
+const bookRoutes = require('./routes/book.route');
 const cors = require('cors');
 dotenv.config();
 app.use(express.json())
@@ -24,6 +25,7 @@ app.use('/api/v1/stadium', stadiumRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
+app.use('/api/v1/bookings', bookRoutes);
 
 connectDB();
 app.listen(Port, () => {

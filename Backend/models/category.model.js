@@ -27,4 +27,15 @@ const categorySchema = new mongoose.Schema({
     }
 });
 
+// Virtual populate for stadiums
+categorySchema.virtual('stadiums', {
+    ref: 'Stadium',
+    localField: '_id',
+    foreignField: 'category'
+});
+
+// Enable virtuals in JSON output
+categorySchema.set('toJSON', { virtuals: true });
+categorySchema.set('toObject', { virtuals: true });
+
 module.exports = mongoose.model('Category', categorySchema);

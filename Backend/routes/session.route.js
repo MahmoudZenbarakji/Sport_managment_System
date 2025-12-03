@@ -17,5 +17,7 @@ router.post('/:id/apply', verifyToken, sessionController.applyToSession);
 // Coach endpoints
 router.get('/coach/me', verifyToken, requireRole('coach'), sessionController.getSessionsByCoach);
 router.get('/:id/applicants', verifyToken, requireRole('coach'), sessionController.getApplicants);
+router.put('/:id', verifyToken, requireRole('coach'), sessionController.updateSession);
+router.delete('/:id', verifyToken, requireRole('coach'), sessionController.deleteSession);
 
 module.exports = router;

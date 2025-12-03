@@ -10,6 +10,7 @@ router.route('/')
 router.route("/:id")
 .put(upload.single('image'), categoryController.updateCategory)
 .delete(categoryController.deleteCategory)
+.get(categoryController.getCategoryById);
 
 
 module.exports = router;

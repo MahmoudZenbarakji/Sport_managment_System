@@ -10,6 +10,7 @@ const User = () => {
     city: '',
     phoneNumber: ''
   });
+  const [profileFile, setProfileFile] = useState(null);
   const [users, setUsers] = useState([]);
   const [coaches, setCoaches] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -66,13 +67,25 @@ const User = () => {
     setSuccess('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(
-        `${apiBase}/api/v1/users/create-coach`,
-        { ...form },
-        { headers: token ? { Authorization: `Bearer ${token}` } : {} }
-      );
+      const fd = new FormData();
+      Object.entries(form).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          fd.append(key, value);
+        }
+      });
+      if (profileFile) {
+        fd.append('profilePicture', profileFile);
+      }
+
+      const res = await axios.post(`${apiBase}/api/v1/users/create-coach`, fd, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          // Let browser set proper multipart boundary when using FormData
+        },
+      });
       setSuccess('Coach created successfully');
       setForm({ name: '', email: '', password: '', bio: '', city: '', phoneNumber: '' });
+      setProfileFile(null);
       // refresh users list
       fetchUsers();
     } catch (err) {
@@ -112,10 +125,28 @@ const User = () => {
             <label className="block text-sm">Phone</label>
             <input name="phoneNumber" value={form.phoneNumber} onChange={handleChange} className="w-full p-2 border rounded" />
           </div>
+          <div>
+            <label className="block text-sm">Profile Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setProfileFile(e.target.files?.[0] || null)}
+              className="w-full p-2 border rounded"
+            />
+          </div>
 
           <div className="flex items-center gap-2">
             <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">Create Coach</button>
-            <button type="button" onClick={() => setForm({ name: '', email: '', password: '', bio: '', city: '', phoneNumber: '' })} className="px-3 py-1 border rounded">Reset</button>
+            <button
+              type="button"
+              onClick={() => {
+                setForm({ name: '', email: '', password: '', bio: '', city: '', phoneNumber: '' });
+                setProfileFile(null);
+              }}
+              className="px-3 py-1 border rounded"
+            >
+              Reset
+            </button>
           </div>
           {error && <p className="text-red-600">{error}</p>}
           {success && <p className="text-green-600">{success}</p>}

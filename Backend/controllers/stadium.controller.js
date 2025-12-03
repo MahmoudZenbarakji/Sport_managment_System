@@ -25,9 +25,18 @@ const createStadium = async (req, res) => {
 
 const getStadiums = async (req, res) => {
     try {
-        const stadiums = await Stadium.find()
-            .populate('owner')
-            .populate('category');
+        const { category } = req.query; // Optional category filter
+        
+        let query = Stadium.find();
+        
+        // If category query parameter is provided, filter by category
+        if (category) {
+            query = query.where('category').equals(category);
+        }
+        
+        const stadiums = await query
+            .populate('owner', 'name email')
+            .populate('category', 'name description image');
         res.status(200).json(stadiums);
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
@@ -80,6 +89,20 @@ const updateStadium = async (req, res) => {
     }
 };
 
+const getStadiumsByCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        
+        const stadiums = await Stadium.find({ category: categoryId })
+            .populate('owner', 'name email')
+            .populate('category', 'name description image');
+        
+        res.status(200).json(stadiums);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
 const deleteStadium = async (req, res) => {
     try {
         const { id } = req.params;
@@ -99,6 +122,7 @@ module.exports = {
     createStadium,
     getStadiums,
     getStadiumById,
+    getStadiumsByCategory,
     updateStadium,
     deleteStadium
 };

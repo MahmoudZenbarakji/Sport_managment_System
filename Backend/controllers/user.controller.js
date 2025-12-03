@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
 // Admin helper: create a coach user
 const createCoach = async (req, res) => {
     try {
-        const { name, email, password, profilePicture, bio, location, phoneNumber, address, city, state } = req.body;
+        const { name, email, password, bio, location, phoneNumber, address, city, state } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({ message: 'name, email and password are required' });
@@ -53,6 +53,15 @@ const createCoach = async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(password, salt);
+
+        // Determine profile picture path if an image was uploaded
+        let profilePicture;
+        if (req.file) {
+            // store relative path so frontend can prefix with API base URL
+            profilePicture = `/${req.file.path.replace(/\\/g, '/')}`;
+        } else {
+            profilePicture = undefined;
+        }
 
         const user = await User.create({
             name,
@@ -130,6 +139,11 @@ const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
         const payload = { ...req.body };
+
+        // If profile picture was uploaded, use the file path
+        if (req.file) {
+            payload.profilePicture = `/${req.file.path.replace(/\\/g, '/')}`;
+        }
 
         // If password provided, hash it
         if (payload.password) {
