@@ -15,7 +15,7 @@ const Navbar = () => {
     { name: "Gym", href: "gyms" },
     { name: "About Us", href: "#about" },
     { name: "Team", href: "#team" },
-    { name: "Blog", href: "#blog" },
+    { name: "Blog", href: "/blog" },
   ];
 
   return (
@@ -25,7 +25,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <img
               className="w-[50px] h-[50px]"
-              src="WhatsApp_Image_2025-12-02_at_12.46.28_PM-removebg-preview.png"
+              src="/WhatsApp_Image_2025-12-02_at_12.46.28_PM-removebg-preview.png"
               alt=""
             />
             <span className="text-white text-2xl font-bold tracking-wider">
@@ -34,13 +34,23 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex space-x-8">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-white hover:text-[#E9622b] transition duration-300"
-              >
-                {link.name}
-              </a>
+              link.href.startsWith('/') ? (
+                <button
+                  key={link.name}
+                  onClick={() => navigate(link.href)}
+                  className="text-white hover:text-[#E9622b] transition duration-300 bg-transparent border-none cursor-pointer"
+                >
+                  {link.name}
+                </button>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-white hover:text-[#E9622b] transition duration-300"
+                >
+                  {link.name}
+                </a>
+              )
             ))}
           </div>
           <div className="flex items-center space-x-4">

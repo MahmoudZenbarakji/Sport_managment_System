@@ -1,131 +1,68 @@
 
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
-const facilitiesData = {
-  football: [
-    {
-      id: 1,
-      name: "ملعب الكامب نو المصغر",
-      location: "دمشق، المزة",
-      image:
-        "https://via.placeholder.com/600x400/000000/ffffff?text=Football+1",
-    },
-    {
-      id: 2,
-      name: "ملعب الإتحاد الرياضي",
-      location: "اللاذقية، الكورنيش",
-      image:
-        "https://via.placeholder.com/600x400/E9622b/ffffff?text=Football+2",
-    },
-    {
-      id: 3,
-      name: "صالة الفيحاء",
-      location: "حلب، الشهباء",
-      image:
-        "https://via.placeholder.com/600x400/333333/ffffff?text=Football+3",
-    },
-  ],
-  basketball: [
-    {
-      id: 1,
-      name: "صالة السلة المحترفة",
-      location: "دبي",
-      image:
-        "https://via.placeholder.com/600x400/E9622b/ffffff?text=Basketball+1",
-    },
-    {
-      id: 2,
-      name: "نادي الجلاء",
-      location: "عمان",
-      image:
-        "https://via.placeholder.com/600x400/000000/ffffff?text=Basketball+2",
-    },
-    {
-      id: 3,
-      name: "ساحة النجوم",
-      location: "الرياض",
-      image:
-        "https://via.placeholder.com/600x400/D3D3D3/000000?text=Basketball+3",
-    },
-  ],
-  tennis: [
-    {
-      id: 1,
-      name: "صالة السلة المحترفة",
-      location: "دبي",
-      image:
-        "https://via.placeholder.com/600x400/E9622b/ffffff?text=Basketball+1",
-    },
-    {
-      id: 2,
-      name: "نادي الجلاء",
-      location: "عمان",
-      image:
-        "https://via.placeholder.com/600x400/000000/ffffff?text=Basketball+2",
-    },
-    {
-      id: 3,
-      name: "ساحة النجوم",
-      location: "الرياض",
-      image:
-        "https://via.placeholder.com/600x400/D3D3D3/000000?text=Basketball+3",
-    },
-  ],
-  swimming: [
-    {
-      id: 1,
-      name: "صالة السلة المحترفة",
-      location: "دبي",
-      image:
-        "https://via.placeholder.com/600x400/E9622b/ffffff?text=Basketball+1",
-    },
-    {
-      id: 2,
-      name: "نادي الجلاء",
-      location: "عمان",
-      image:
-        "https://via.placeholder.com/600x400/000000/ffffff?text=Basketball+2",
-    },
-    {
-      id: 3,
-      name: "ساحة النجوم",
-      location: "الرياض",
-      image:
-        "https://via.placeholder.com/600x400/D3D3D3/000000?text=Basketball+3",
-    },
-  ],
-  volleyball: [
-    {
-      id: 1,
-      name: "صالة السلة المحترفة",
-      location: "دبي",
-      image:
-        "https://via.placeholder.com/600x400/E9622b/ffffff?text=Basketball+1",
-    },
-    {
-      id: 2,
-      name: "نادي الجلاء",
-      location: "عمان",
-      image:
-        "https://via.placeholder.com/600x400/000000/ffffff?text=Basketball+2",
-    },
-    {
-      id: 3,
-      name: "ساحة النجوم",
-      location: "الرياض",
-      image:
-        "https://via.placeholder.com/600x400/D3D3D3/000000?text=Basketball+3",
-    },
-  ],
-};
+import { getCategoryById, getCategories, API_BASE } from "../utils/api";
 
 const CategoryList = () => {
-  const { type } = useParams(); 
-  const items = facilitiesData[type.toLowerCase()] || [];
+  const { type } = useParams();
+  const navigate = useNavigate();
+  const [category, setCategory] = useState(null);
+  const [stadiums, setStadiums] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // إعدادات الأنيميشن
+  useEffect(() => {
+    fetchCategoryData();
+  }, [type]);
+
+  const fetchCategoryData = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      // Try to fetch by ID first (if type is an ID)
+      let result = await getCategoryById(type);
+      
+      // If that fails, try to find category by name
+      if (!result.success) {
+        const categoriesResult = await getCategories();
+        if (categoriesResult.success) {
+          const foundCategory = categoriesResult.categories.find(
+            cat => cat.name.toLowerCase() === type.toLowerCase() || cat._id === type
+          );
+          if (foundCategory) {
+            result = await getCategoryById(foundCategory._id);
+          }
+        }
+      }
+
+      if (result.success) {
+        setCategory(result.category);
+        setStadiums(result.category.stadiums || []);
+      } else {
+        setError(result.error || "Category not found");
+      }
+    } catch (err) {
+      setError("Failed to load category data");
+      console.error("Category error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "https://via.placeholder.com/600x400/333333/ffffff?text=No+Image";
+    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+      return imagePath;
+    }
+    return `${API_BASE}${imagePath}`;
+  };
+
+  const handleStadiumClick = (stadiumId) => {
+    navigate(`/facility/${stadiumId}`);
+  };
+
+  // Animation settings
   const cardVariants = {
     hidden: (direction) => ({
       opacity: 0,
@@ -138,6 +75,22 @@ const CategoryList = () => {
     },
   };
 
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 w-full">
+        <div className="text-white text-center text-2xl mt-20">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 w-full">
+        <div className="text-red-400 text-center text-2xl mt-20">{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 w-full">
       <motion.h1
@@ -145,16 +98,29 @@ const CategoryList = () => {
         animate={{ opacity: 1, y: 0 }}
         className="text-4xl md:text-5xl font-bold text-[#E9622b] text-center mb-16 mt-10 capitalize"
       >
-        {type} Facilities
+        {category?.name || type} Facilities
       </motion.h1>
 
+      {category?.description && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-gray-300 text-center mb-12 text-lg max-w-3xl mx-auto"
+        >
+          {category.description}
+        </motion.p>
+      )}
+
       <div className="space-y-20">
-        {items.length > 0 ? (
-          items.map((item, index) => {
+        {stadiums.length > 0 ? (
+          stadiums.map((stadium, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div
-                key={item.id}
+              <motion.div
+                key={stadium._id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
                 className={`flex flex-col md:flex-row items-center gap-10 overflow-hidden ${
                   !isEven ? "md:flex-row-reverse" : ""
                 }`}
@@ -168,9 +134,10 @@ const CategoryList = () => {
                   className="w-full md:w-1/2"
                 >
                   <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-[350px] object-cover rounded-xl shadow-lg border-2 border-transparent hover:border-[#E9622b] transition-all duration-300"
+                    src={getImageUrl(stadium.Image)}
+                    alt={stadium.name}
+                    className="w-full h-[350px] object-cover rounded-xl shadow-lg border-2 border-transparent hover:border-[#E9622b] transition-all duration-300 cursor-pointer"
+                    onClick={() => handleStadiumClick(stadium._id)}
                   />
                 </motion.div>
                 <motion.div
@@ -181,22 +148,29 @@ const CategoryList = () => {
                   viewport={{ once: true, amount: 0.3 }}
                   className="w-full md:w-1/2 text-center md:text-left space-y-4"
                 >
-                  <h2 className="text-3xl font-bold text-white">{item.name}</h2>
-                  <p className="text-xl text-[#D3D3D3]">📍 {item.location}</p>
-                  <p className="text-gray-400">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة. لقد تم
-                    توليد هذا النص من مولد النص العربى.
-                  </p>
-                  <button className="mt-4 px-8 py-3 bg-[#E9622b] text-white font-bold rounded-full hover:bg-white hover:text-[#E9622b] transition duration-300 shadow-md">
+                  <h2 className="text-3xl font-bold text-white">{stadium.name}</h2>
+                  {stadium.owner && (
+                    <p className="text-lg text-[#D3D3D3]">Owner: {stadium.owner.name}</p>
+                  )}
+                  {stadium.Price && (
+                    <p className="text-xl text-[#E9622b] font-semibold">Price: ${stadium.Price}</p>
+                  )}
+                  {stadium.description && (
+                    <p className="text-gray-400">{stadium.description}</p>
+                  )}
+                  <button
+                    onClick={() => handleStadiumClick(stadium._id)}
+                    className="mt-4 px-8 py-3 bg-[#E9622b] text-white font-bold rounded-full hover:bg-white hover:text-[#E9622b] transition duration-300 shadow-md"
+                  >
                     See More
                   </button>
                 </motion.div>
-              </div>
+              </motion.div>
             );
           })
         ) : (
           <div className="text-white text-center text-2xl">
-            No facilities found yet.
+            No facilities found in this category yet.
           </div>
         )}
       </div>

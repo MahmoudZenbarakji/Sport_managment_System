@@ -9,6 +9,8 @@ import GymsPage from './pages/GymsPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Blog from './pages/Blog';
+import CreatePost from './pages/CreatePost';
 
 
 
@@ -77,6 +79,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/create-post" element={<CreatePost />} />
           <Route path="/category/:type" element={<CategoryPage />} />
           <Route path="/facility/:id" element={<FacilityDetailsPage />} />
           <Route path="/gyms" element={<GymsPage />} />

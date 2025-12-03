@@ -11,6 +11,8 @@ const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
 const sessionRoutes = require('./routes/session.route');
 const bookRoutes = require('./routes/book.route');
+const blogRoutes = require('./routes/blog.route');
+const commentRoutes = require('./routes/comment.route');
 const cors = require('cors');
 dotenv.config();
 app.use(express.json())
@@ -26,6 +28,8 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/sessions', sessionRoutes);
 app.use('/api/v1/bookings', bookRoutes);
+app.use('/api/v1/blogs', blogRoutes);
+app.use('/api/v1/comments', commentRoutes);
 
 connectDB();
 app.listen(Port, () => {

@@ -1,11 +1,22 @@
 import React from 'react';
-
-import { Bell, Search, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Bell, Search, Settings, LogOut } from 'lucide-react';
 
 const userAvatarUrl = 'https://via.placeholder.com/150/E9622B/ffffff?text=DD';
 
 const TopBar = () => {
+  const navigate = useNavigate();
   const ACCENT_COLOR = 'text-[#E9622b]';
+
+  const handleLogout = () => {
+    // Clear all authentication data
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user');
+    
+    // Navigate to login page
+    navigate('/login');
+  };
 
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between h-16 px-6 bg-black text-white shadow-md border-b border-[#E9622b]">
@@ -30,23 +41,44 @@ const TopBar = () => {
           <Settings className={`w-6 h-6 ${ACCENT_COLOR}`} />
         </button>
 
-        <div className="h-6 w-px bg-black"></div>
+        <div className="h-6 w-px bg-gray-700"></div>
 
-        <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity duration-200">
+        <div className="flex items-center space-x-3">
           <div className="flex flex-col text-right">
             <span className="text-sm font-semibold text-white">
-              Dimaa Daabous
+              {(() => {
+                const user = localStorage.getItem('user');
+                if (user) {
+                  try {
+                    return JSON.parse(user).name || 'User';
+                  } catch {
+                    return 'User';
+                  }
+                }
+                return 'User';
+              })()}
             </span>
 
-            <span className="text-xs text-gray-400">Admin</span>
+            <span className="text-xs text-gray-400">
+              {localStorage.getItem('role') === 'admin' ? 'Admin' : localStorage.getItem('role') === 'coach' ? 'Coach' : 'User'}
+            </span>
           </div>
 
           <img
             className="w-10 h-10 rounded-full object-cover border-2 border-[#E9622b]"
             src={userAvatarUrl}
-            alt="Admin Avatar"
+            alt="User Avatar"
           />
         </div>
+
+        <button
+          onClick={handleLogout}
+          className="ml-4 px-4 py-2 flex items-center space-x-2 rounded-lg bg-[#E9622b] hover:bg-[#d8551f] text-white transition-colors duration-200"
+          title="Logout"
+        >
+          <LogOut className="w-4 h-4" />
+          <span className="text-sm font-medium">Logout</span>
+        </button>
       </div>
     </div>
   );

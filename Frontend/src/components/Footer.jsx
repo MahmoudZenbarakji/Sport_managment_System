@@ -18,7 +18,7 @@ const Footer = () => {
             <div className="flex items-center">
               <img
                 className="w-[50px] h-[50px]"
-                src="WhatsApp_Image_2025-12-02_at_12.46.28_PM-removebg-preview.png"
+                src="/WhatsApp_Image_2025-12-02_at_12.46.28_PM-removebg-preview.png"
                 alt=""
               />
               <span className="text-white text-2xl font-bold tracking-wider">
