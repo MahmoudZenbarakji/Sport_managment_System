@@ -495,6 +495,10 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     position: "relative",
+    borderWidth: 2,
+    borderColor: "#E9622b",
+    borderRadius: 65,
+    padding: 2,
   },
   avatar: {
     width: 120,
@@ -543,9 +547,19 @@ const styles = StyleSheet.create({
   },
   infoSection: {
     marginBottom: 30,
+    borderWidth: 1,
+    borderColor: "#1a1a1a",
+    borderRadius: 12,
+    padding: 16,
+    backgroundColor: "#0a0a0a",
   },
   fieldContainer: {
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#333",
+    borderRadius: 8,
+    padding: 12,
+    backgroundColor: "#111",
   },
   label: {
     fontSize: 14,
@@ -565,8 +579,8 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#111",
-    borderWidth: 1,
-    borderColor: "#333",
+    borderWidth: 1.5,
+    borderColor: "#E9622b",
     borderRadius: 8,
     padding: 12,
     color: "#fff",
@@ -583,7 +597,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#E9622b",
-    padding: 15,
+    padding: 10,
     borderRadius: 8,
     alignItems: "center",
     flex: 1,
