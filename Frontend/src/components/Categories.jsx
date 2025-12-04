@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getCategories, API_BASE } from "../utils/api";
+import { getCategories } from "../utils/api";
+import { API_BASE } from "../environment/config";
 import {
   FaFutbol,
   FaBasketballBall,
@@ -88,12 +89,12 @@ const Categories = () => {
             categories.map((category) => {
               const IconComponent = getIcon(category.name);
               const imageUrl = getImageUrl(category.image);
-              return (
-                <div
+            return (
+              <div
                   key={category._id}
                   onClick={() => handleCategoryClick(category)}
                   className="flex flex-col items-center p-6 bg-white bg-opacity-10 rounded-lg transition duration-300 hover:bg-opacity-20 cursor-pointer w-32 h-32 justify-center relative overflow-hidden group"
-                >
+              >
                   {imageUrl ? (
                     <img
                       src={imageUrl}
@@ -107,10 +108,10 @@ const Categories = () => {
                     <IconComponent className="text-6xl text-[#E9622b] mt-3 z-10" />
                   )}
                   <p className="text-sm font-medium text-[#E9622b] z-10 mt-2">
-                    {category.name}
-                  </p>
-                </div>
-              );
+                  {category.name}
+                </p>
+              </div>
+            );
             })
           ) : (
             <div className="text-white w-full">No categories available</div>

@@ -10,12 +10,12 @@ const Sidebar = () => {
   const isCoach = role === 'coach';
 
   const adminNavItems = [
-    { to: '/category', label: 'Category' },
-    { to: '/stadium', label: 'Stadium' },
-    { to: '/user', label: 'User' },
-    { to: '/requests', label: 'Requests' },
-    { to: '/notifications', label: 'Notifications' },
-  ];
+  { to: '/category', label: 'Category' },
+  { to: '/stadium', label: 'Stadium' },
+  { to: '/user', label: 'User' },
+  { to: '/requests', label: 'Requests' },
+  { to: '/notifications', label: 'Notifications' },
+];
 
   const coachNavItems = [
     { to: '/training-sessions', label: 'Training Sessions' },

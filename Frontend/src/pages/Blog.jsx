@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getBlogs, getBlogById, likeBlog, getCommentsByBlog, addComment, deleteComment, likeComment, getCurrentUser, API_BASE } from "../utils/api";
+import { getBlogs, getBlogById, likeBlog, getCommentsByBlog, addComment, deleteComment, likeComment, getCurrentUser } from "../utils/api";
+import { API_BASE } from "../environment/config";
 import bg from "../assets/bg1.jpeg";
 
 const Blog = () => {

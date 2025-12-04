@@ -51,6 +51,7 @@ export default function FacilitiesPage() {
               style={styles.button}
               onPress={() => router.push(`/facilities/${f.id}`)}
             >
+              <Ionicons name="arrow-forward" size={20} color="#fff" />
               <Text style={styles.buttonText}>Learn More</Text>
             </TouchableOpacity>
           </View>
@@ -71,37 +72,56 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#111",
-    marginBottom: 20,
-    borderRadius: 8,
+    marginBottom: 24,
+    borderRadius: 16,
     overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#1a1a1a",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
   },
   cardImage: {
     width: "100%",
-    height: 180,
+    height: 200,
+    resizeMode: "cover",
   },
   locationRow: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: "#0a0a0a",
   },
   locationIcon: {
-    marginRight: 6,
+    marginRight: 8,
+    color: "#E9622b",
   },
   locationText: {
     color: "#fff",
     fontSize: 16,
+    fontWeight: "600",
   },
   button: {
     backgroundColor: "#E9622b",
-    paddingVertical: 12,
-    margin: 12,
-    borderRadius: 6,
+    paddingVertical: 14,
+    margin: 16,
+    borderRadius: 12,
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    shadowColor: "#E9622b",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    marginLeft: 8,
   },
 });

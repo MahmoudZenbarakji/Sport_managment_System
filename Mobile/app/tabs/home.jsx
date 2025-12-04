@@ -38,7 +38,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",  // black background
+    backgroundColor: "#000",
   },
   title: {
     color: "#fff",
@@ -48,15 +48,16 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   scrollContent: {
-    paddingBottom: 20,
+    paddingBottom: 30,
     paddingTop: 10,
   },
   sliderWrapper: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
     backgroundColor: "#000",
+    marginBottom: 8,
   },
   categoriesWrapper: {
-    marginTop: 16,
-    margin:4
+    marginTop: 8,
+    paddingHorizontal: 4,
   },
 });

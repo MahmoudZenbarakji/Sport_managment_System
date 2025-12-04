@@ -217,8 +217,8 @@ export default function Profile() {
   const handleLogout = async () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
-      {
-        text: "Logout",
+      { 
+        text: "Logout", 
         onPress: async () => {
           await logout();
           router.replace("/login");
@@ -437,9 +437,9 @@ export default function Profile() {
             </TouchableOpacity>
           </View>
         ) : (
-          <TouchableOpacity style={styles.button} onPress={handleLogout}>
-            <Text style={styles.buttonText}>Logout</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
         )}
       </ScrollView>
     </SafeAreaProvider>

@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getCategoryById, getCategories, API_BASE } from "../utils/api";
+import { getCategoryById, getCategories } from "../utils/api";
+import { API_BASE } from "../environment/config";
 
 const CategoryList = () => {
-  const { type } = useParams();
+  const { type } = useParams(); 
   const navigate = useNavigate();
   const [category, setCategory] = useState(null);
   const [stadiums, setStadiums] = useState([]);

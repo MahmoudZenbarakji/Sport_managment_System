@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { ENDPOINTS, API_BASE } from "../api/api";
 
@@ -102,6 +103,7 @@ export default function CategoryDetails() {
       )}
 
       <TouchableOpacity style={styles.button} onPress={() => router.back()}>
+        <Ionicons name="arrow-back" size={20} color="#fff" />
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -122,20 +124,24 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 32,
+    paddingVertical: 20,
   },
   categoryImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 10,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    marginBottom: 16,
+    borderWidth: 3,
+    borderColor: "#E9622b",
   },
   categoryName: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center",
-    marginTop: 10,
+    marginTop: 12,
+    marginBottom: 8,
   },
   categoryDescription: {
     fontSize: 16,
@@ -143,45 +149,67 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 8,
     paddingHorizontal: 20,
+    lineHeight: 24,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#E9622b",
-    marginBottom: 10,
+    marginBottom: 16,
+    marginTop: 8,
   },
   gymCard: {
     backgroundColor: "#111",
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 10,
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#1a1a1a",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
   },
   stadiumImage: {
     width: "100%",
-    height: 150,
-    borderRadius: 8,
-    marginBottom: 8,
+    height: 180,
+    borderRadius: 12,
+    marginBottom: 12,
+    resizeMode: "cover",
   },
   gymName: {
-    fontSize: 18,
+    fontSize: 20,
     color: "#fff",
     fontWeight: "bold",
+    marginBottom: 6,
   },
   gymDesc: {
     fontSize: 14,
     color: "#ccc",
+    lineHeight: 20,
+    marginBottom: 8,
   },
   button: {
     backgroundColor: "#E9622b",
-    padding: 12,
-    borderRadius: 6,
+    padding: 16,
+    borderRadius: 12,
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 24,
+    marginBottom: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    shadowColor: "#E9622b",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    marginLeft: 8,
   },
   errorText: {
     fontSize: 18,
@@ -189,15 +217,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   priceText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#E9622b",
     fontWeight: "bold",
-    marginTop: 4,
+    marginTop: 8,
   },
   ownerText: {
     fontSize: 14,
     color: "#999",
-    marginTop: 4,
+    marginTop: 6,
   },
   noStadiumsText: {
     fontSize: 16,
@@ -205,5 +233,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     fontStyle: "italic",
+    padding: 20,
   },
 });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMe, logoutUser, API_BASE } from "../utils/api";
+import { getMe, logoutUser } from "../utils/api";
+import { API_BASE } from "../environment/config";
 import bg from "../assets/bg1.jpeg";
 
 const Profile = () => {
